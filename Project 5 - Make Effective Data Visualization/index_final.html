@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+	
+	<style>
+	
+	circle.dimple-series-1
+	{
+		fill: red;
+		stroke: black;
+        stroke-width: 2;
+        opacity: 0.7;
+	}
+	  
+	rect.dimple-series-0 
+	{
+		fill: yellow;
+		stroke: blue;
+        stroke-width: 2;
+        opacity: 0.7;
+    }
+     
+	h2 
+	{
+		text-align: center;
+	}
+	
+    </style>
+
+	<script type="text/javascript">	
+	/*
+        Draw js function
+    */
+    function draw(data) {
+    /*
+        D3.js setup code
+    */
+
+		"use strict";
+		var margin = 25,
+			width = 1400 - margin,
+			height = 600 - margin;
+			
+	/*
+		Chart 1 construction code - Male vs Female Survivors
+	*/
+			  
+		d3.select("body")
+            .append("h2")
+            .text("Male vs Female Survivors")
+
+		var svg = d3.select("body")
+			.append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')
+				.attr('class','chart');
+
+	
+		var myChart = new dimple.chart(svg, data);
+			myChart.addCategoryAxis("x", "Sex");
+			myChart.addMeasureAxis("y", "Survived");
+			myChart.addSeries(null, dimple.plot.bar);
+			myChart.addSeries(null, dimple.plot.bubble);
+			myChart.draw();	
+			
+	/*
+		Chart 2 construction code - Passenger class vs Survivors
+	*/
+		
+		d3.select("body")
+            .append("h2")
+            .text("Passenger class vs Survivors")
+		  
+		 var svg = d3.select("body")
+            .append("svg")
+              .attr("width", width + margin)
+              .attr("height", height + margin)
+            .append('g')
+                .attr('class','chart');
+		  
+		var myChart2 = new dimple.chart(svg, data);
+			myChart2.addCategoryAxis("x", "Pclass"); 
+			myChart2.addMeasureAxis("y", "Survived");
+			myChart2.addSeries(null, dimple.plot.bar);
+			myChart2.addSeries(null, dimple.plot.bubble);
+			myChart2.draw();
+		  
+	/*
+		Chart 3 construction code - Survivors from various places Embarked
+	*/
+	
+		  d3.select("body")
+            .append("h2")
+            .text("Survivors from various places Embarked")
+		  
+		var svg = d3.select("body")
+			.append("svg")
+				.attr("width", width + margin)
+				.attr("height", height + margin)
+            .append('g')
+				.attr('class','chart');
+		  
+		  data = dimple.filterData(data, "Embarked", ["Cherbourg", "Southampton", "Queenstown"])
+		  var myChart3 = new dimple.chart(svg, data);
+			  myChart3.addCategoryAxis("x", "Embarked"); 
+			  myChart3.addMeasureAxis("y", "Survived");
+			  myChart3.addSeries(null, dimple.plot.bar);
+			  myChart3.addSeries(null, dimple.plot.bubble);
+			  myChart3.draw();
+        };
+	</script>
+  </head>
+<body>
+
+  <script type="text/javascript">
+	/*
+		D3 is used to load the CSV data file
+	*/
+		d3.csv("titanic-data.csv", draw);
+		
+  </script>
+  
+</body>
+</html>
