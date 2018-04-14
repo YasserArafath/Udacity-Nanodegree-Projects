@@ -1,0 +1,496 @@
+Explore & Summarize Data by Yasser Arafath
+========================================================
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+
+library(ggplot2)
+library(dplyr)
+library(GGally)
+library(scales)
+library(memisc)
+library(gridExtra)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, Load_the_Data}
+
+# Load the Data
+setwd('D:/Yasser/Data Analytics/5/Project')
+cars <- read.csv('FARS.csv', sep = ',')
+
+```
+
+
+
+## This data set cosists of the fatal accidents which occured in US from the year 1998 to 2011. The variables present are Age, State, No of Airbags in the car, if Airbags were deployed, the injury level for driver, etc. There are many missin values, these are handled by creating subsets of the dataset.
+
+
+
+### Summary of the dataset:
+```{r echo=FALSE, message=FALSE, warning=FALSE, Summary}
+
+# Summary of the dataset
+summary(cars)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, Create_Subsets}
+
+#A subset of the cars dataset excluding the 'NA' values is created
+cars.ss <- subset(cars , !is.na(age) & !is.na(sex))
+
+```
+
+
+
+### A histogram is created to see the number of accidents caused by the age groups
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plot_1}
+
+# A histogram is created to see the number of accidents caused by the age groups
+qplot(x = age , data = cars.ss) + 
+  geom_bar() + 
+  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 10)) +
+  labs(x = 'Age', y = 'No of accidents', 
+        title = 'Age vs Accident')
+
+```
+
+> This histogram shows that the people between age 15-25 cause the most number of accidents
+
+
+
+### A histogram is created to see the number of accidents caused every year from 1998-2011
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plot_2}
+
+# A histogram is created to see the number of accidents caused every year from 1998-2011
+qplot(x = as.factor(year),data = cars.ss, color = sex) +
+  geom_bar() +
+  labs(x = 'Year', y = 'Number of accidents', 
+        title = 'Number of Accident every year')
+
+```
+
+> This histogram shows that the number of accidents caused each year is decreasing.
+
+
+
+### A histogram to see which sex caused the most number of accidents
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plot_3}
+
+#A histogram to see which sex caused the most number of accidents 
+qplot(x = as.factor(sex), data = cars.ss) + 
+geom_bar() + 
+  labs(x = 'Sex -  1=Male, 2=Female', y = 'No of accidents', 
+        title = 'Male vs Female')
+
+```
+
+> It is seen that females are marginally greater in count compared to males
+
+
+
+
+### A histogram to see if the cars were equipped with airbags
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plot_4}
+
+#A histogram to see if the cars were equipped with airbags 
+qplot(x = D_airbagAvail, data = cars.ss) + 
+  labs(x = 'Airbag Available' , y = 'No of accidents' , 
+        title = 'Availability of Airbag')
+
+```
+
+> It is seen that majority of the cars were equipped with airbags & still faced a fatal acciddent
+
+
+
+### A histogram to see the deployment of airbag during the accident
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plot_5}
+
+#A histogram to see the deployment of airbag during the accident 
+qplot(x = D_airbagDeploy , data = cars.ss) + 
+  geom_bar() +
+  labs(x = 'Airbag deployed' , y = 'No of accidents', 
+        title = 'Airbag deployment')
+
+```
+
+> The airbags wernt deployed in majority of the accidents, from which we can infer that airbags play an important role in safety
+
+
+
+### A histogram to see the deployment of airbag in the airbag available cars
+```{r echo=FALSE, message=FALSE, warning=FALSE,Univariate_Plot_6}
+
+# A subset is created with only airbag available cars
+newdata <- subset(cars.ss , D_airbagAvail == "yes")
+
+# A histogram to see the deployment of airbag in the airbag available cars
+ggplot(aes(x = D_airbagAvail) , data = newdata) +
+  geom_bar(aes(fill = D_airbagDeploy)) +
+  labs(x = 'Airbag Available', y = 'Number of Accidents' , fill = 'Airbag Deployed',
+        title = 'Airbag availability vs Deployment')
+
+```
+
+> This graph is to show the ratio of how the airbags were deployed in the airbag available cars
+
+
+### A histogram to see the number of accident in every State
+```{r echo=FALSE, message=FALSE, warning=FALSE, Univariate_Plot_7}
+
+#A histogram to see the number of accident in every State
+qplot(x = state, data = cars.ss, binwidth = 1) + 
+  geom_bar() +
+  scale_x_continuous(limits = c(1, 57), breaks = seq(0, 57, 1)) +
+  labs(x = 'State Code', y = 'No of accidents', 
+        title = 'No of accidents State wise')
+
+```
+
+> The highest number of accidents were caused in State "6"
+
+
+
+## Univariate Analysis
+
+
+### What is the structure of your dataset?
+> This dataset is a list of all the fatal accidents which occured in the US from the year 1998 to 2011. 
+
+### What is/are the main feature(s) of interest in your dataset?
+> The main feature of this dataset is that it shows the number of accidents happened in each year from 1998 to 2011 by sex.
+
+### What other features in the dataset do you think will help support your \
+investigation into your feature(s) of interest?
+> The cause of the accident & the time of occurance will help in the investigation further.
+
+### Did you create any new variables from existing variables in the dataset?
+> Yes, a subset of the dataset without the 'NA' values for 'sex' & 'Age' was created.
+And a subset of data having only cars with airbag was created.
+
+### Of the features you investigated, were there any unusual distributions? \
+Did you perform any operations on the data to tidy, adjust, or change the form \
+of the data? If so, why did you do this?
+> There wernt any unusuall distributions, the dataset was clean already.
+
+
+# Bivariate Plots Section
+
+## These are graphs obtained by comparing 2 variables
+### We first group the values by age and sex
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_1}
+
+#The age is grouped, and a new subset is created with the mean & median of Driver injury values
+age_groups <- group_by(cars.ss, age, sex)
+cars.D_injury_by_age <- summarise(age_groups,
+          injury_mean = mean(D_injury),
+          injury_median = median(D_injury),
+          n = n())
+
+```
+
+
+###Accident data are first seperated by sex
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_2}
+
+#A subset of data by gender wise is created
+men_data <- subset(cars.ss , sex == 1)
+women_data <- subset(cars.ss , sex == 2)
+
+#A bargraph of accidents by age is created only for Men
+m1 <- qplot(x = age, data = men_data) + 
+  labs(x = 'Age' , y = 'No of accidents' , 
+        title = 'Accident Data of Men')
+
+m1
+
+```
+
+> A bargraph of accidents by age is created only for Men
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_3}
+
+#A bargraph of accidents by age is created only for Women
+m2 <- qplot(x = age, data = women_data) + 
+  labs(x = 'Age' , y = 'No of accidents' , 
+        title = 'Accident Data of Women')
+
+m2
+
+```
+
+> A bargraph of accidents by age is created only for Women
+
+##The graphs are put side by side for a better comparision
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_4}
+
+#Arranging the graphs side by side
+grid.arrange(m1 , m2 , ncol=2)
+
+```
+
+
+### A histogram is created comparing the age with the mean of the injury values
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_5}
+
+#A histogram is created to show which age group suffered the most injury
+ggplot(aes(age, injury_mean),
+       data = cars.D_injury_by_age) + geom_line(alpha = .5, size =1, position = 'jitter') +
+  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 10)) + 
+  scale_y_continuous(limits = c(0, 4), breaks = seq(0, 4, 1)) + 
+  labs(x = 'Age', y = 'Mean of Injury', 
+        title = 'Age vs Injury')
+
+```
+
+> Age vs Injury
+
+### A scatterplot is created comparing the sex with the mean of the injury values
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_6}
+
+#This scatterplot is created to show which sex had different levels of injury
+qplot(x = age, y = injury_mean, data = cars.D_injury_by_age, color = as.factor(sex)) +
+  geom_point() +
+  geom_line() + 
+  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 10)) + 
+  scale_y_continuous(limits = c(2, 3), breaks = seq(2, 3, .25)) +
+  labs(x = 'Age' , y = 'Mean of Injury' , 
+        title = 'Age vs Injury by sex' , color = 'Gender')
+
+```
+
+> Age vs Injury by Sex
+
+
+### A boxplot is created comparing the age with the injury values
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_7}
+
+#This boxplot is created comparing the age with the injury values
+ggplot(aes(x = as.factor(D_injury), y = age) , data = cars.ss) + 
+  geom_boxplot(color = 'blue') + 
+  geom_jitter(alpha = 0.02) + 
+  labs(x = 'Age' , y = 'Level of Injury' , 
+        title = 'Age vs Injury')
+
+```
+
+> A boxplot to compare Age vs Injury by Sex
+
+
+
+## From the previous histogram, it was seen that the states '6', '48' & '12' had the highest number of accidents. 
+## Here We create seperate bar graphs state wise to show the number of accidents in the top 3 states by age group
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_8}
+
+#Subsets are created for states 6, 12 & 48
+state_top <- subset(cars.ss, state == 6 | state == 12 | state == 48)
+state_6 <- subset(cars.ss, state == 6)
+state_12 <- subset(cars.ss, state == 12)
+state_48 <- subset(cars.ss, state == 48)
+
+
+#This bar graphs are created state wise to show the age group which faced the accidents
+  
+p1 <- qplot(x = age, data = state_6) + 
+  labs(x ='Age' , y = 'Count' , title ='State 6')
+
+p2 <- qplot(x = age, data = state_12) + 
+  labs(x = 'Age' , y = 'Count' , title = 'State 12')
+
+p3 <- qplot(x = age , data = state_48) + 
+  labs(x = 'Age' , y = 'Count' , title = 'State 48')
+
+#A grid is created to arrange all 3 graphs together
+grid.arrange(p1 , p2 , p3 , ncol=1)
+
+```
+
+> A grid is created to show the top  states which had the highest number of accidents
+
+
+### A boxplot is created comparing the age with the Airbag Availability
+```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plot_9}
+
+#This boxplot is created comparing the age with the Airbag Availability
+ggplot(aes(x = as.factor(D_airbagAvail), y = age) , data = cars.ss) + 
+  geom_boxplot(color = 'blue') + 
+  geom_jitter(alpha = 0.02) + 
+  labs(x = 'Airbag Availability' , y = 'Age' , 
+        title = 'Age vs Airbag Availability')
+
+```
+
+> A boxplot to compare Age vs Airbag Availability
+
+
+
+# Bivariate Analysis
+
+## From the 1st histogram it is observed that mean of injury is uniform across the various age groups, except for ages above 90 & From the scatterplot, men from various age groups suffered higher injury compared to women of that age group 
+
+### Talk about some of the relationships you observed in this part of the \
+investigation. How did the feature(s) of interest vary with other features in \
+the dataset?
+> In this part, the injury level of the victim was compared to the age. It was found that it did not vary much across the age groups.
+
+### Did you observe any interesting relationships between the other features \
+(not the main feature(s) of interest)?
+> Injury level between the sex was observed, it was found that male were prone to higher injury than the female victim in the 20-50 age group.
+
+### What was the strongest relationship you found?
+> People from age group 75-85 suffered the most injury
+
+
+
+# Multivariate Plots Section
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+#This scatterplot is created to show which sex had different levels of injury
+cuberoot_trans = function() trans_new('cuberoot', transform = function(x) x^(1/3),inverse = function(x) x^3)
+
+```
+
+##A Graph is generated to compare Age vs Sex vs Year
+```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_1}
+
+ggplot(cars.ss, (aes(x = year, y = age, color = as.factor(sex))))  + 
+  geom_point(alpha = .5, size = 1, position = 'jitter') +
+  scale_x_continuous(trans = cuberoot_trans(), limits = c(1998, 2010),breaks = seq(1998, 2010, 1)) + 
+  scale_y_continuous(limits = c(0, 100)) + 
+  labs(x = 'Year', y = 'Age', color = 'Sex, 1-Male, 2-Female',
+        title = 'Age vs Sex vs Year')
+
+```
+
+> From this graph, we can see that the blue color is on the top portion of the graph and brown is spread at the bottom of the graph. i.e Females with age higher than 70 face more accidents compared to men throughout the years.
+
+
+## A Boxplot to represent how every year each sex face the accident
+```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_2}
+
+ggplot(data = cars.ss, aes(x = as.factor(sex), y = age)) + 
+  geom_boxplot(color = 'darkblue') + 
+  facet_grid(~ year) + 
+  labs(x = 'Year' , y = 'Age' , color = 'Sex, 1-Male, 2-Female',
+        title = 'Age vs Sex vs Year')
+
+```
+
+> This is another detailed representation of how every year each sex face the accident
+
+
+##A Histogram to see which age group met with the highest number of accident in top 3 states by age group
+```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_3}
+
+#This boxplot is created comparing the age with the injury values
+ggplot(aes(x = age, y = D_injury , fill = as.factor(state)), data = state_top) +  geom_bar(stat = 'identity') +
+    labs(x = 'Age', y = 'Count', title = 'State vs Age vs Injury', fill = 'State')
+
+```
+
+> Number of accidents by Age group in Top 3 states
+
+
+##A Boxplot to see the level of Injury by age in ascending order
+```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_4}
+
+#A Boxplot to see the level of Injury by age in ascending order
+ggplot(cars.ss , aes(x = reorder(D_injury, age) , y = age , fill = D_injury)) +  geom_boxplot() +
+  labs(x = 'Injury Level' , y = 'Age' , title = 'Injury Level in order')
+
+```
+
+> A boxplot to indicate the injury level in order
+
+
+
+##A level plot to compare Injury lever and age by year
+```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots_5}
+
+#A level plot to compare Injury lever and age by year
+ggplot(cars.ss , aes(year, D_injury, z = age)) + geom_tile(aes(fill = age)) + theme_bw() +
+  labs(x = 'Injury Level' , y = 'Age' , title = 'Injury Level in order')
+
+```
+
+
+
+
+# Multivariate Analysis
+
+### Talk about some of the relationships you observed in this part of the \
+investigation. Were there features that strengthened each other in terms of \
+looking at your feature(s) of interest?
+> From this Multivariate Analysis, we observed that the majority of victims in age group 70-90 were females and in the age group 20-50 the majority is males
+
+### Were there any interesting or surprising interactions between features?
+> Three were nothing surprising or interesting
+
+
+------
+
+# Final Plots and Summary
+
+
+### Plot One
+```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_One}
+
+qplot(x = age, data = cars.ss) +
+  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 10)) +
+  labs(x = 'Age', y = 'No of accidents' , 
+        title = 'Age vs Accident')
+
+```
+
+### This is one of the importang histograms as this shows which age group faced the most faality. From this histogram, we can infer that people from age 15-25 faced the most number of accidents.
+
+
+### Plot Two
+```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Two}
+
+
+qplot(x = age, y = injury_mean, data = cars.D_injury_by_age, color = as.factor(sex)) +
+  geom_point() +
+  geom_line() + 
+  scale_x_continuous(limits = c(0, 100), breaks = seq(0, 100, 10)) + 
+  scale_y_continuous(limits = c(2, 3), breaks = seq(2, 3, .25)) +
+  labs(x = 'Age' , y = 'Mean of Injury' , 
+        title = 'Age vs Injury by sex' , color = 'Gender')
+
+```
+
+### This Graph shows how much injury different sex faced in the crash. Males from age 20-50 faced severe injury compared to females. and females from age 70-90 faced higher injury rate than males of that group
+
+
+### Plot Three
+```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Three}
+
+ggplot(data = cars.ss, aes(x = as.factor(sex), y = age)) + 
+  geom_boxplot(color = 'darkblue') + 
+  facet_grid(~ year) + 
+  labs(x = 'Year' , y = 'Age' , color = 'Sex, 1-Male, 2-Female' ,
+        title = 'Age vs Sex vs Year')
+
+```
+
+### From this Multivariate Analysis, we observed that the majority of victims in age group 70-90 were females and in the age group 20-50 the majority is males
+
+
+
+# Reflection
+
+### So from this dataset, many observations were made:
+
+#### 1. People from age 15-25 faced the most number of accidents
+#### 2. The number of accidents decreased as years passed
+#### 3. No of incidents where airbag was deployed - 78480, airbag not deployed - 51582
+#### 4. Females were slightly higher than the males
+#### 5. Injury suffered by Males were higher than Females in the age group 20-50
+#### 6. Injury suffered by Females were higher than Males in the age group 70-90
+
+### There were many 'NA' data for Age & Sex columns, a subset was created omitting th 'NA' values. There were no further challenges in the dataset, evertything else was well sorted out.
+
+### In the future, we can reduce the number of accidents by further deeply analysing this dataset by predicting the time of accident and the place it happens the most. It was seen that many cars were without airbags, with this stats, we can implement many safety regulations for th betterment of the drivers & passengers.

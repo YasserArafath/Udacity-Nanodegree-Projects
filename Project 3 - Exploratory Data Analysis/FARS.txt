@@ -1,0 +1,15 @@
+The dataset contains the following columns:
+
+year	-	The year in which the accident took place
+state	-	The state where the accident occured
+age	-	The age of the driver
+sex	-	The gender of the driver.
+		 1 - Male, 2 - Female
+D_injury	-	The severity of the injury
+		0 - Unknown, 1 - low, 2 - moderate, 3 - high, 4 - very high
+D_airbagAvail	-	Availability of airbag in the vehicle
+D_airbagDeploy	-	Wheather airbag was deployed during the crash
+
+This dataset is from the US FARS (Fatality Analysis Recording System) archive that is intended to include every accident in which there was at least one fatality. Data are limited to vehicles where the front seat passenger seat was occupied.
+
+Link : https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars
