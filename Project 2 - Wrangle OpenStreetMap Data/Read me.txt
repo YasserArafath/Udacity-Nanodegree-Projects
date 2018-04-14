@@ -1,0 +1,15 @@
+File description : 
+
+Ottawa.txt (1kb) - A text file containing a link to the map position you wrangled in your project, a short description of the area and a reason for my choice
+
+Autiting.py (5kb) - Python script used to Audit & Clean the OSM file
+
+Process_OSM.py (9kb) - Python script used to Process the OSM file
+
+Create_Sample.py (2kb) - Python Script to create a sample file of the original OSM
+
+Schema_SQL.txt (1kb) - Schema used to create SQL database
+
+Sample_ottawa.osm (38,158kb) - The sample file created from the original OSM file
+
+Report.pdf (597kb) - A PDF file containing the answers to thee rubic questions.
