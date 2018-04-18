@@ -20,3 +20,8 @@ In 2000, Enron was one of the largest companies in the United States. By 2002, i
 The starter code is provided, that reads in the data, takes your features of choice, then puts them into a numpy array, which is the input form that most sklearn functions assume. With the help of that, I had engineered the features, picked and tuned an algorithm, and tested and evaluateed my identifier.
 
 [Link to Report](https://cdn.rawgit.com/YasserArafath/Udacity-Nanodegree-Projects/0a72209c/Project%204%20-%20Identify%20Fraud%20from%20Enron%20Email/Report.pdf)
+
+### Tools Used
+
+* Jupyter Notebook
+* Python
