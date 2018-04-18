@@ -18,3 +18,17 @@ The place chosen by me was Ottawa, Canada. Since the data set was huge, I create
 * Jupyter Notebook
 * SQLite
 * Python
+
+### File description : 
+
+Autiting.py  - Python script used to Audit & Clean the OSM file
+
+Process_OSM.py - Python script used to Process the OSM file
+
+Create_Sample.py - Python Script to create a sample file of the original OSM
+
+Schema_SQL.txt - Schema used to create SQL database
+
+Report.pdf (597kb) - A PDF file containing the answers to thee rubic questions.
+
+Link.txt  - A text file containing a link to the map position you wrangled in your project, a short description of the area and a reason for my choice
