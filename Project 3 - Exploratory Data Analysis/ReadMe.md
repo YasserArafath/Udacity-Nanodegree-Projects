@@ -1,3 +1,5 @@
+# Project 3 - Exploratory Data Analysis
+
 ### Project Overview
 In this project, R and exploratory data analysis techniques will be used to explore relationships in one variable to multiple variables and to explore a selected data set for distributions, outliers, and anomalies.
 
@@ -22,8 +24,7 @@ The dataset is from the US FARS (Fatality Analysis Recording System) archive tha
 * R Language
 
 ### File description : 
-EDA_RFile.rmd  -  The RMD File created with R Studio   
-FARS.txt    -   Description about the dataset
-
+EDA_RFile.rmd  -  The RMD File created with R Studio      
+FARS.txt    -   Description about the dataset     
 FARS.csv    -   The dataset file 
 
