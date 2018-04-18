@@ -24,5 +24,6 @@ The dataset is from the US FARS (Fatality Analysis Recording System) archive tha
 ### File description : 
 EDA_RFile.rmd  -  The RMD File created with R Studio   
 FARS.txt    -   Description about the dataset 
+
 FARS.csv    -   The dataset file 
 
