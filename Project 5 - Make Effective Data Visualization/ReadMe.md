@@ -29,7 +29,7 @@ The following files are created :
 
 *Note: The "index_final.html" will be viewable only if D3 javascript library is added to the browser.
 
-Tools Used
+### Tools Used
 
 * R Studio
 * D3 Javascript Library
