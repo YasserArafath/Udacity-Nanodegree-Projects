@@ -25,4 +25,4 @@ The following files are created :
 
 [Link to Report](https://github.com/YasserArafath/Udacity-Nanodegree-Projects/blob/master/Project%205%20-%20Make%20Effective%20Data%20Visualization/Report.md)
 
-**Note: The "index_final.html" will be supported only if D3 javascript library is added to the browser.
+*Note: The "index_final.html" will be viewable only if D3 javascript library is added to the browser.
