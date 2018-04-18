@@ -12,7 +12,7 @@ After completing the project, I will be able to:
 ### Project Details
 The place chosen by me was Ottawa, Canada. Since the data set was huge, I created a small sample data set from the original data set to make things easier. 
 
-[Link to Report](https://github.com/YasserArafath/Udacity-Nanodegree-Projects/blob/master/Project%202%20-%20Wrangle%20OpenStreetMap%20Data/Report.pdf)
+[Link to Report](https://cdn.rawgit.com/YasserArafath/Udacity-Nanodegree-Projects/908276db/Project%202%20-%20Wrangle%20OpenStreetMap%20Data/Report.pdf)
 
 ### Tools Used
 * Jupyter Notebook
