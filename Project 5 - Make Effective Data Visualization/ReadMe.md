@@ -1,3 +1,5 @@
+# Project 5 - Make Effective Data Visualization
+
 ### Project Overview
 To create a data visualization from a data set that tells a story or highlights trends or patterns in the data. I will be using d3.js to create the visualization. This project will be a reflection of the theory and practice of data visualization, such as visual encodings, design principles, and effective communication.
 
