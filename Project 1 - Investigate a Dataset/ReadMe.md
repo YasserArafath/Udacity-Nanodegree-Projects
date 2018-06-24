@@ -1,7 +1,7 @@
 # Project 1 - Investigate a Dataset
 
 ### Project Overview
-In this project, I will be analyzing a dataset and then communicate my findings about it. I will be use the Python libraries NumPy, pandas, and Matplotlib to make your analysis easier.
+In this project, I will be analyzing a dataset and then communicate my findings about it. I will be use the Python libraries NumPy, pandas, and Matplotlib to make my analysis easier.
 
 ### What have I learnt?
 After completing the project, you will:
