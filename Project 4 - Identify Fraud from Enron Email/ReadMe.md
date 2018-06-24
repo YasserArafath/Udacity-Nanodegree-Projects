@@ -1,7 +1,7 @@
 # Project 4 - Identify Fraud from Enron Email
 
 ### Project Overview
-In this project, I will put your machine learning skills to use by building an algorithm to identify Enron Employees who may have committed fraud based on the public Enron financial and email dataset.
+In this project, I will put my machine learning skills to use by building an algorithm to identify Enron Employees who may have committed fraud based on the public Enron financial and email dataset.
 
 ### What will I learn?
 By the end of the project, I will be able to:
